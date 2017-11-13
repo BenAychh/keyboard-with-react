@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import VideoPreview from './VideoPreview';
 import videoShape from '../../shapes/video';
 
-const VideoList = ({ videoArray, onVideoClick, highlightedVideo }) =>
+const VideoList = ({ videoArray, watchVideo, highlightedVideo }) =>
   (
     <ul>
       {videoArray.map((video) =>
         <VideoPreview
           key={video.id}
           video={video}
-          onClick={() => onVideoClick(video.id)}
+          onClick={() => watchVideo(video.id)}
           highlightedVideo={highlightedVideo}>
         </VideoPreview>
       )}

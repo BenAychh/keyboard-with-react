@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onVideoClick: id => dispatch(setActiveVideo(id)),
+    watchVideo: id => dispatch(setActiveVideo(id)),
     highlightVideo: id => dispatch(setHighlightedVideo(id)),
   }
 }

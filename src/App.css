@@ -42,10 +42,11 @@ li {
   overflow: auto;
   word-break: break-all;
   padding: 10px;
+  cursor: pointer;
 }
 
 li.active {
-  border: 1px solid magenta;
+  border: 5px solid magenta;
 }
 
 @keyframes App-logo-spin {
