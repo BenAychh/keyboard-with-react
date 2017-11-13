@@ -1,20 +1,24 @@
-import { HIGHLIGHT_VIDEO, SELECT_VIDEO } from '../actionTypes';
+import Video from './Video';
 
 import { types } from 'mobx-state-tree';
 
 const Store = types
   .model('AStore', {
     activeVideo: types.optional(types.string, ''),
-    highlightedVideo: types.optional(types.string, '')
+    videos: types.array(types.array(Video), [])
   })
   .views(self => ({
     // Utilities
   }))
   .actions(self => ({
-    [HIGHLIGHT_VIDEO]({ id }) {
-      self.highlightedVideo = id;
+    unhighlightAll () {
+      self.videos.forEach(videosArray => videosArray.forEach(video => {
+        if (video.highlighted) {
+          video.highlighted = false;
+        }
+      }));
     },
-    [SELECT_VIDEO]({ id }) {
+    watchVideo (id) {
       self.activeVideo = id;
     }
   }));

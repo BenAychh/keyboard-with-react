@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 
 
 // Random "video" data
 import VideoList from './VideoList';
 
-export default class Main extends React.Component {
+const Main = observer(class Main extends React.Component {
   row=null;
   column=null;
 
@@ -33,16 +34,18 @@ export default class Main extends React.Component {
 
   downKey(event) {
     event.preventDefault();
-    this.row = this.row !== null ? Math.min(this.props.videos.length - 1, this.row + 1) : 0
+    this.row = this.row !== null ? Math.min(this.props.store.videos.length - 1, this.row + 1) : 0
     this.column = 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    this.props.store.unhighlightAll();
+    this.props.store.videos[this.row][this.column].highlight();
   }
 
   upKey(event) {
     event.preventDefault();
     this.row = this.row !== null ? Math.max(0, this.row - 1) : 0
     this.column = 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    this.props.store.unhighlightAll();
+    this.props.store.videos[this.row][this.column].highlight();
   }
 
   leftKey(event) {
@@ -51,7 +54,8 @@ export default class Main extends React.Component {
       this.row = 0;
     }
     this.column = this.column !== null ? Math.max(0, this.column - 1) : 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    this.props.store.unhighlightAll();
+    this.props.store.videos[this.row][this.column].highlight();
   }
 
   rightKey(event) {
@@ -59,15 +63,16 @@ export default class Main extends React.Component {
     if (!this.row) {
       this.row = 0;
     }
-    this.column = this.column !== null ? Math.min(this.props.videos[this.row].length - 1, this.column + 1) : 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    this.column = this.column !== null ? Math.min(this.props.store.videos[this.row].length - 1, this.column + 1) : 0;
+    this.props.store.unhighlightAll();
+    this.props.store.videos[this.row][this.column].highlight();
   }
 
   // We already have the id because the video is highlighted, now just make it the video being watched.
   enterKey(event) {
     event.preventDefault();
-    if (this.props.highlightedVideo) {
-      this.props.watchVideo(this.props.highlightedVideo);
+    if (this.row !== null && this.column !== null) {
+      this.props.store.watchVideo(this.props.store.videos[this.row][this.column].id);
     }
   }
 
@@ -84,11 +89,13 @@ export default class Main extends React.Component {
   render() {
     return (
       <div>
-        <h1>video being played: {this.props.activeVideo}</h1>
-        {this.props.videos.map((videoArray, index) =>
-          <VideoList key={index} videoArray={videoArray} watchVideo={this.props.watchVideo} highlightedVideo={this.props.highlightedVideo}></VideoList>
+        <h1>video being played: {this.props.store.activeVideo}</h1>
+        {this.props.store.videos.map((videoArray, index) =>
+          <VideoList key={index} videoArray={videoArray} watchVideo={this.props.store.watchVideo}></VideoList>
         )}
       </div>
     )
   }
-}
+});
+
+export default Main;

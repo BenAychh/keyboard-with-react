@@ -1,27 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 
 import VideoPreview from './VideoPreview';
 import videoShape from '../../shapes/video';
 
-const VideoList = ({ videoArray, watchVideo, highlightedVideo }) =>
+const VideoList = observer(({ videoArray, watchVideo }) =>
   (
     <ul>
       {videoArray.map((video) =>
         <VideoPreview
           key={video.id}
           video={video}
-          onClick={() => watchVideo(video.id)}
-          highlightedVideo={highlightedVideo}>
+          onClick={() => watchVideo(video.id)}>
         </VideoPreview>
       )}
     </ul>
   )
+)
 
 VideoList.propTypes = {
-  activeVideo: PropTypes.string,
-  onVideoClick: PropTypes.func.isRequired,
-  videoArray: PropTypes.arrayOf(videoShape).isRequired,
+  watchVideo: PropTypes.func.isRequired,
 }
 
 export default VideoList;

@@ -7,23 +7,21 @@ import './index.css';
 import App from './App';
 import storeFactory from './models';
 import registerServiceWorker from './registerServiceWorker';
+import videos from './fakeData';
 
 const initialState = {
   activeVideo: '',
   highlightedVideo: '',
+  videos,
 }
 
 remotedev.start({ port: 8000 });
 
-const mstStore = storeFactory.create(initialState);
-const store = asReduxStore(mstStore);
-console.log(remotedev);
-connectReduxDevtools(remotedev, mstStore);
+const store = storeFactory.create(initialState);
+connectReduxDevtools(remotedev, store);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <App store={store}/>,
   document.getElementById('root')
 );
 registerServiceWorker();

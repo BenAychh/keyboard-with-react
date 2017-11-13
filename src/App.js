@@ -3,20 +3,16 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import MainContainer from './Components/Container/MainContainer';
+import Main from './Components/Presentational/Main';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <MainContainer></MainContainer>
-      </div>
-    );
-  }
-}
+const App = (props) => (
+  <div className="App">
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1 className="App-title">Welcome to React</h1>
+    </header>
+    <Main {...props}></Main>
+  </div>
+)
 
 export default App;
