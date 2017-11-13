@@ -8,15 +8,21 @@ const initialState = {
 function videos(state = initialState, action) {
   switch(action.type) {
     case HIGHLIGHT_VIDEO:
-      return {
-        ...state,
-        highlightedVideo: action.id
-      }
+      return state.highlightedVideo !== action.id ?
+        {
+          ...state,
+          highlightedVideo: action.id
+        }
+        :
+        state
     case SELECT_VIDEO:
-      return {
-        ...state,
-        activeVideo: action.id
-      }
+      return state.activeVideo !== action.id ?
+        {
+          ...state,
+          activeVideo: action.id
+        }
+        :
+        state
     default:
       return state;
   }

@@ -35,14 +35,18 @@ export default class Main extends React.Component {
     event.preventDefault();
     this.row = this.row !== null ? Math.min(this.props.videos.length - 1, this.row + 1) : 0
     this.column = 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    if (this.props.highlightedVideo !== this.props.videos[this.row][this.column].id) {
+      this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    }
   }
 
   upKey(event) {
     event.preventDefault();
     this.row = this.row !== null ? Math.max(0, this.row - 1) : 0
     this.column = 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    if (this.props.highlightedVideo !== this.props.videos[this.row][this.column].id) {
+      this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    }
   }
 
   leftKey(event) {
@@ -51,7 +55,9 @@ export default class Main extends React.Component {
       this.row = 0;
     }
     this.column = this.column !== null ? Math.max(0, this.column - 1) : 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    if (this.props.highlightedVideo !== this.props.videos[this.row][this.column].id) {
+      this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    }
   }
 
   rightKey(event) {
@@ -60,13 +66,15 @@ export default class Main extends React.Component {
       this.row = 0;
     }
     this.column = this.column !== null ? Math.min(this.props.videos[this.row].length - 1, this.column + 1) : 0;
-    this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    if (this.props.highlightedVideo !== this.props.videos[this.row][this.column].id) {
+      this.props.highlightVideo(this.props.videos[this.row][this.column].id)
+    }
   }
 
   // We already have the id because the video is highlighted, now just make it the video being watched.
   enterKey(event) {
     event.preventDefault();
-    if (this.props.highlightedVideo) {
+    if (this.props.highlightedVideo && this.props.activeVideo !== this.props.highlightedVideo) {
       this.props.watchVideo(this.props.highlightedVideo);
     }
   }
